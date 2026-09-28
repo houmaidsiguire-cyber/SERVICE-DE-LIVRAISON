@@ -1,0 +1,1227 @@
+/* ====================================================================
+   LIVREUR FASO - FEUILLE DE STYLE MODERNE & HAUTE LISIBILITÉ
+   Optimisé pour téléphone & plein soleil à Ouagadougou
+   ==================================================================== */
+
+:root {
+  /* Palette Principale (Mode Standard Épuré & Sombre) */
+  --bg-primary: #0F172A;       /* Bleu nuit très profond */
+  --bg-secondary: #1E293B;     /* Ardoise sombre pour cartes */
+  --bg-tertiary: #334155;      /* Bordures et séparateurs */
+  --bg-input: #1E293B;
+
+  --text-main: #F8FAFC;        /* Blanc cassé très lisible */
+  --text-muted: #94A3B8;       /* Gris clair informatif */
+  --text-sub: #CBD5E1;
+
+  --accent-gold: #F59E0B;      /* Ambre / Or du Sahel */
+  --accent-green: #10B981;     /* Vert émeraude pour gains et bénéfice */
+  --accent-red: #EF4444;       /* Rouge pour dépenses et alertes */
+  --accent-blue: #3B82F6;
+
+  /* Couleurs Opérateurs Mobiles & Paiement */
+  --color-orange-money: #FF7900;
+  --color-moov-money: #0075FF;
+  --color-especes: #10B981;
+  --color-autre: #A855F7;
+
+  /* Dimensions & Ergonomie Mobile */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.25);
+  --shadow-md: 0 6px 16px rgba(0,0,0,0.35);
+  --shadow-lg: 0 12px 28px rgba(0,0,0,0.45);
+
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ====================================================================
+   MODE PLEIN SOLEIL (ULTRA-HAUT CONTRASTE POUR LE MIDI EN EXTÉRIEUR)
+   ==================================================================== */
+body.theme-sunlight {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F1F5F9;
+  --bg-tertiary: #000000;
+  --bg-input: #FFFFFF;
+
+  --text-main: #000000;        /* Noir absolu pour contraste maximal */
+  --text-muted: #1E293B;       /* Gris très foncé */
+  --text-sub: #0F172A;
+
+  --accent-gold: #D97706;
+  --accent-green: #047857;     /* Vert foncé haute visibilité */
+  --accent-red: #B91C1C;
+  --accent-blue: #1D4ED8;
+
+  --shadow-sm: 0 2px 0 #000000;
+  --shadow-md: 0 4px 0 #000000;
+  --shadow-lg: 0 8px 0 #000000;
+}
+
+body.theme-sunlight .card,
+body.theme-sunlight .course-card,
+body.theme-sunlight .nav-tabs,
+body.theme-sunlight .app-header {
+  border: 2px solid #000000;
+}
+
+body.theme-sunlight .form-input {
+  border: 2px solid #000000;
+  background-color: #FFFFFF;
+  color: #000000;
+  font-weight: 700;
+}
+
+/* ====================================================================
+   RESET ET BASES
+   ==================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  line-height: 1.5;
+  padding-bottom: 90px; /* Espace pour le scroll et le FAB */
+  transition: background-color 0.25s ease, color 0.25s ease;
+  font-size: 16px;
+}
+
+/* ====================================================================
+   EN-TÊTE
+   ==================================================================== */
+.app-header {
+  background-color: var(--bg-secondary);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--bg-tertiary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  border: 2px solid var(--accent-gold);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--accent-gold);
+  line-height: 1.1;
+}
+
+.app-subtitle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Bouton Plein Soleil */
+.sunlight-toggle {
+  background: var(--bg-primary);
+  color: var(--text-main);
+  border: 1.5px solid var(--accent-gold);
+  border-radius: var(--radius-full);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 40px;
+}
+
+.sunlight-toggle:active {
+  transform: scale(0.96);
+  background: var(--accent-gold);
+  color: #000;
+}
+
+.sunlight-icon {
+  font-size: 1.1rem;
+}
+
+/* Bandeau Réseau / Hors-Ligne */
+.network-badge {
+  background-color: #064E3B;
+  color: #A7F3D0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.2px;
+}
+
+body.theme-sunlight .network-badge {
+  background-color: #DCFCE7;
+  color: #065F46;
+  border-bottom: 1px solid #000;
+}
+
+.network-badge .dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10B981;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #10B981;
+}
+
+/* ====================================================================
+   NAVIGATION PAR ONGLETS (MOBILE FIRST)
+   ==================================================================== */
+.nav-tabs {
+  display: flex;
+  background-color: var(--bg-secondary);
+  padding: 6px 12px;
+  gap: 8px;
+  border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.nav-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 10px 8px;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 48px; /* Grande zone tactile pour doigts */
+}
+
+.nav-tab.active {
+  background-color: var(--accent-gold);
+  color: #0F172A;
+  box-shadow: var(--shadow-sm);
+}
+
+body.theme-sunlight .nav-tab.active {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.tab-badge {
+  background-color: var(--bg-primary);
+  color: var(--accent-gold);
+  font-size: 0.75rem;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+}
+
+.nav-tab.active .tab-badge {
+  background-color: #0F172A;
+  color: #FFFFFF;
+}
+
+/* ====================================================================
+   CONTENEUR PRINCIPAL
+   ==================================================================== */
+.main-content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 16px 12px;
+}
+
+.view-panel {
+  display: block;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.view-panel[hidden] {
+  display: none !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ====================================================================
+   CARTES ET FORMULAIRES
+   ==================================================================== */
+.card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 20px 16px;
+  border: 1px solid var(--bg-tertiary);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--bg-tertiary);
+  padding-bottom: 12px;
+}
+
+.card-header h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.currency-tag {
+  background: var(--bg-primary);
+  color: var(--accent-gold);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--accent-gold);
+}
+
+/* Groupes de formulaires */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-sub);
+}
+
+.required {
+  color: var(--accent-gold);
+  font-weight: 900;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+.form-input {
+  width: 100%;
+  background-color: var(--bg-input);
+  border: 1.5px solid var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  padding: 14px 14px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 52px; /* Super facile à toucher avec des gants ou à une main */
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+}
+
+.form-input.text-lg {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.field-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ====================================================================
+   SECTION FINANCIÈRE AVEC ENCART BÉNÉFICE NET
+   ==================================================================== */
+.financial-inputs-card {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px dashed var(--accent-gold);
+  border-radius: var(--radius-md);
+  padding: 16px 14px;
+  margin: 20px 0;
+}
+
+body.theme-sunlight .financial-inputs-card {
+  background-color: #FEF3C7;
+  border: 2px solid #000;
+}
+
+.input-with-unit {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-unit .form-input {
+  padding-right: 65px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.input-money {
+  color: var(--accent-green) !important;
+  font-size: 1.35rem !important;
+}
+
+body.theme-sunlight .input-money {
+  color: #047857 !important;
+}
+
+.unit-text {
+  position: absolute;
+  right: 14px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  pointer-events: none;
+}
+
+body.theme-sunlight .unit-text {
+  color: #000;
+}
+
+/* Boîte du Bénéfice Net en Temps Réel */
+.net-profit-box {
+  background: linear-gradient(135deg, #064E3B 0%, #065F46 100%);
+  border: 2px solid #10B981;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  text-align: center;
+  margin-top: 16px;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+}
+
+body.theme-sunlight .net-profit-box {
+  background: #DCFCE7;
+  border: 2.5px solid #000;
+  box-shadow: 0 4px 0 #000;
+}
+
+.profit-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #A7F3D0;
+}
+
+body.theme-sunlight .profit-label {
+  color: #000;
+}
+
+.profit-calc-formula {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #6EE7B7;
+  margin: 4px 0;
+}
+
+body.theme-sunlight .profit-calc-formula {
+  color: #047857;
+  font-weight: 700;
+}
+
+.profit-value-display {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1.1;
+}
+
+body.theme-sunlight .profit-value-display {
+  color: #000000;
+}
+
+.profit-unit {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+body.theme-sunlight .profit-unit {
+  color: #000;
+}
+
+/* ====================================================================
+   SÉLECTEUR DE MODE DE PAIEMENT (CHIPS CLICABLES)
+   ==================================================================== */
+.payment-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.payment-chip input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chip-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--bg-tertiary);
+  background-color: var(--bg-input);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 52px;
+}
+
+.chip-icon {
+  font-size: 1.25rem;
+}
+
+.payment-chip input[type="radio"]:checked + .chip-content {
+  border-color: var(--accent-gold);
+  background-color: rgba(245, 158, 11, 0.15);
+  box-shadow: 0 0 0 2px var(--accent-gold);
+}
+
+.payment-chip input[type="radio"]:checked + .chip-content.pay-orange {
+  border-color: var(--color-orange-money);
+  background-color: rgba(255, 121, 0, 0.18);
+  box-shadow: 0 0 0 2px var(--color-orange-money);
+}
+
+.payment-chip input[type="radio"]:checked + .chip-content.pay-moov {
+  border-color: var(--color-moov-money);
+  background-color: rgba(0, 117, 255, 0.18);
+  box-shadow: 0 0 0 2px var(--color-moov-money);
+}
+
+body.theme-sunlight .chip-content {
+  border: 2px solid #000;
+  background-color: #FFF;
+  color: #000;
+}
+
+body.theme-sunlight .payment-chip input[type="radio"]:checked + .chip-content {
+  background-color: #FDE68A;
+  border: 3px solid #000;
+  box-shadow: 0 3px 0 #000;
+}
+
+/* ====================================================================
+   BOUTONS D'ACTION
+   ==================================================================== */
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+  min-height: 54px; /* Hauteur généreuse pour un appui facile */
+  width: 100%;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: #10B981;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+body.theme-sunlight .btn-primary {
+  background-color: #047857;
+  color: #FFFFFF;
+  border: 2.5px solid #000;
+  box-shadow: 0 4px 0 #000;
+}
+
+.btn-secondary {
+  background-color: var(--bg-tertiary);
+  color: var(--text-main);
+}
+
+body.theme-sunlight .btn-secondary {
+  background-color: #E2E8F0;
+  color: #000;
+  border: 2px solid #000;
+}
+
+.btn-danger {
+  background-color: var(--accent-red);
+  color: #FFFFFF;
+}
+
+body.theme-sunlight .btn-danger {
+  background-color: #B91C1C;
+  border: 2px solid #000;
+}
+
+/* ====================================================================
+   VUE 2 : LISTE DES COURSES
+   ==================================================================== */
+.courses-toolbar {
+  margin-bottom: 16px;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.search-input {
+  width: 100%;
+  background-color: var(--bg-secondary);
+  border: 1.5px solid var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  padding: 12px 42px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  min-height: 48px;
+}
+
+body.theme-sunlight .search-input {
+  border: 2px solid #000;
+  background: #FFF;
+  color: #000;
+}
+
+.clear-search {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* Résumé rapide en haut de la liste */
+.quick-stats-summary {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 10px;
+}
+
+.summary-pill {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+body.theme-sunlight .summary-pill {
+  border: 2px solid #000;
+  background-color: #FFF;
+}
+
+.pill-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 800;
+}
+
+body.theme-sunlight .pill-label {
+  color: #000;
+}
+
+.pill-val {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.highlight-pill .pill-val {
+  color: var(--accent-green);
+}
+
+body.theme-sunlight .highlight-pill .pill-val {
+  color: #047857;
+}
+
+/* Filtres rapides par chips */
+.filter-chips-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-chip {
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-tertiary);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-chip.active {
+  background: var(--accent-gold);
+  color: #0F172A;
+  border-color: var(--accent-gold);
+}
+
+body.theme-sunlight .filter-chip {
+  border: 1.5px solid #000;
+  background: #FFF;
+  color: #000;
+}
+
+body.theme-sunlight .filter-chip.active {
+  background: #000;
+  color: #FFF;
+}
+
+/* ====================================================================
+   CARTES DE COURSES (ITEM DE LA LISTE)
+   ==================================================================== */
+.courses-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.course-card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--bg-tertiary);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease;
+  position: relative;
+}
+
+.course-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.course-date-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+body.theme-sunlight .course-date-box {
+  color: #1E293B;
+}
+
+.course-payment-badge {
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-orange {
+  background-color: rgba(255, 121, 0, 0.2);
+  color: #FFA040;
+  border: 1px solid var(--color-orange-money);
+}
+
+.badge-moov {
+  background-color: rgba(0, 117, 255, 0.2);
+  color: #60A5FA;
+  border: 1px solid var(--color-moov-money);
+}
+
+.badge-especes {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #34D399;
+  border: 1px solid var(--color-especes);
+}
+
+.badge-autre {
+  background-color: rgba(168, 85, 247, 0.2);
+  color: #C084FC;
+  border: 1px solid var(--color-autre);
+}
+
+body.theme-sunlight .badge-orange,
+body.theme-sunlight .badge-moov,
+body.theme-sunlight .badge-especes,
+body.theme-sunlight .badge-autre {
+  background-color: #FFF;
+  color: #000;
+  border: 2px solid #000;
+}
+
+/* Client & Itinéraire */
+.course-client-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.itinerary-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+body.theme-sunlight .itinerary-row {
+  background-color: #F1F5F9;
+  border: 1px solid #000;
+  color: #000;
+}
+
+.itinerary-arrow {
+  color: var(--accent-gold);
+  font-weight: 900;
+}
+
+body.theme-sunlight .itinerary-arrow {
+  color: #D97706;
+}
+
+/* Chiffres Financiers de la Course */
+.course-finance-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr;
+  gap: 8px;
+  padding: 10px 0;
+  border-top: 1px dashed var(--bg-tertiary);
+  border-bottom: 1px dashed var(--bg-tertiary);
+  align-items: center;
+}
+
+body.theme-sunlight .course-finance-row {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.finance-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.finance-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 800;
+}
+
+body.theme-sunlight .finance-label {
+  color: #000;
+}
+
+.finance-amount {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.net-profit-badge {
+  background-color: rgba(16, 185, 129, 0.15);
+  border: 1.5px solid var(--accent-green);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  text-align: right;
+}
+
+body.theme-sunlight .net-profit-badge {
+  background-color: #DCFCE7;
+  border: 2px solid #000;
+}
+
+.net-profit-badge .finance-label {
+  color: var(--accent-green);
+}
+
+body.theme-sunlight .net-profit-badge .finance-label {
+  color: #047857;
+}
+
+.net-profit-badge .finance-amount {
+  font-size: 1.15rem;
+  color: var(--accent-green);
+  font-weight: 800;
+}
+
+body.theme-sunlight .net-profit-badge .finance-amount {
+  color: #047857;
+}
+
+/* Actions Modifier / Supprimer */
+.course-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.btn-card-action {
+  background: var(--bg-primary);
+  border: 1px solid var(--bg-tertiary);
+  color: var(--text-sub);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+}
+
+body.theme-sunlight .btn-card-action {
+  border: 1.5px solid #000;
+  background: #FFF;
+  color: #000;
+}
+
+.btn-edit:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+.btn-delete:hover {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+/* État vide */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--bg-tertiary);
+}
+
+.empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+}
+
+.empty-state h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.empty-state p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.btn-goto-add {
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* ====================================================================
+   VUE 3 : PLACEHOLDER TABLEAU DE BORD (ÉTAPE SUIVANTE)
+   ==================================================================== */
+.placeholder-card {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.placeholder-badge {
+  display: inline-block;
+  background-color: #064E3B;
+  color: #6EE7B7;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  border: 1px solid #10B981;
+}
+
+.placeholder-desc {
+  color: var(--text-sub);
+  margin-bottom: 24px;
+  font-size: 1.05rem;
+}
+
+.stats-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 480px) {
+  .stats-preview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.preview-metric {
+  background: var(--bg-primary);
+  border: 1px solid var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+body.theme-sunlight .preview-metric {
+  border: 2px solid #000;
+  background: #FFF;
+}
+
+.preview-icon {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.preview-metric h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  margin-bottom: 4px;
+}
+
+body.theme-sunlight .preview-metric h4 {
+  color: #000;
+}
+
+.preview-metric p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ready-note {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+/* ====================================================================
+   BOUTON FLOTTANT D'AJOUT RAPIDE (POUR LE POUCE SUR MOBILE)
+   ==================================================================== */
+.floating-fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #10B981;
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45);
+  cursor: pointer;
+  z-index: 90;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.theme-sunlight .floating-fab {
+  background-color: #047857;
+  border: 2.5px solid #000;
+  box-shadow: 0 6px 0 #000;
+}
+
+.floating-fab:active {
+  transform: scale(0.92);
+}
+
+.fab-icon {
+  font-size: 1.3rem;
+}
+
+/* ====================================================================
+   BOÎTE DE DIALOGUE CONFIRMATION
+   ==================================================================== */
+.confirm-dialog {
+  margin: auto;
+  border: none;
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-secondary);
+  color: var(--text-main);
+  padding: 0;
+  max-width: 90vw;
+  width: 400px;
+  box-shadow: var(--shadow-lg);
+}
+
+.confirm-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+body.theme-sunlight .confirm-dialog {
+  border: 3px solid #000;
+  background-color: #FFF;
+  color: #000;
+}
+
+.dialog-content {
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.dialog-icon {
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+}
+
+.dialog-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.dialog-text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ====================================================================
+   TOAST NOTIFICATION (MESSAGE FLASH)
+   ==================================================================== */
+.toast {
+  position: fixed;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background-color: #065F46;
+  color: #FFFFFF;
+  border: 1.5px solid #10B981;
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 800;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  z-index: 200;
+  text-align: center;
+  max-width: 90vw;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+body.theme-sunlight .toast {
+  background-color: #DCFCE7;
+  color: #000000;
+  border: 2px solid #000;
+  box-shadow: 0 6px 0 #000;
+}

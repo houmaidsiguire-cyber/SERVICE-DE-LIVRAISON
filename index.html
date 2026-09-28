@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0F172A">
+  <meta name="description" content="Application de suivi de courses pour livreur indépendant à Ouagadougou">
+  <title>Livreur Faso - Suivi des Livraisons</title>
+
+  <!-- Manifeste PWA pour installation sur téléphone -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="icon.jpg">
+  <link rel="apple-touch-icon" href="icon.jpg">
+
+  <!-- Google Fonts : Police très lisible et moderne -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="theme-default">
+
+  <!-- ================= EN-TÊTE DE L'APPLICATION ================= -->
+  <header class="app-header">
+    <div class="header-left">
+      <img src="icon.jpg" alt="Logo Livreur Faso" class="app-logo">
+      <div>
+        <h1 class="app-title">LIVREUR FASO</h1>
+        <p class="app-subtitle">Ouagadougou • Carnet de courses</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <!-- Mode Plein Soleil : Fort contraste pour rouler en plein jour -->
+      <button id="sunlightToggleBtn" class="sunlight-toggle" title="Basculer Mode Plein Soleil">
+        <span class="sunlight-icon">☀️</span>
+        <span class="sunlight-text">Plein Soleil</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= BANDEAU STATUT HORS LIGNE ================= -->
+  <div id="networkStatus" class="network-badge online">
+    <span class="dot"></span>
+    <span class="status-text">Mode Hors-Ligne Prêt (Données sauvegardées localement)</span>
+  </div>
+
+  <!-- ================= NAVIGATION PAR ONGLETS (POUR MOBILE) ================= -->
+  <nav class="nav-tabs" role="tablist">
+    <button class="nav-tab active" id="tabCoursesBtn" data-target="viewCourses" role="tab" aria-selected="true">
+      <span class="nav-icon">📋</span>
+      <span class="nav-label">Mes Courses</span>
+      <span id="coursesBadgeCount" class="tab-badge">0</span>
+    </button>
+    <button class="nav-tab" id="tabNewBtn" data-target="viewNewCourse" role="tab" aria-selected="false">
+      <span class="nav-icon">➕</span>
+      <span class="nav-label">Nouvelle Course</span>
+    </button>
+    <button class="nav-tab" id="tabStatsBtn" data-target="viewStatsPlaceholder" role="tab" aria-selected="false">
+      <span class="nav-icon">📊</span>
+      <span class="nav-label">Tableau de bord</span>
+    </button>
+  </nav>
+
+  <!-- ================= CONTENU PRINCIPAL ================= -->
+  <main class="main-content">
+
+    <!-- 1. VUE : FORMULAIRE D'AJOUT / MODIFICATION D'UNE COURSE -->
+    <section id="viewNewCourse" class="view-panel" hidden>
+      <div class="card form-card">
+        <div class="card-header">
+          <h2 id="formTitle">Ajouter une course</h2>
+          <span class="currency-tag">Devise : FCFA</span>
+        </div>
+
+        <form id="courseForm" novalidate>
+          <input type="hidden" id="editCourseId" value="">
+
+          <!-- DATE -->
+          <div class="form-group">
+            <label for="courseDate">
+              📅 Date de la course <span class="required">*</span>
+            </label>
+            <input type="date" id="courseDate" class="form-input text-lg" required>
+          </div>
+
+          <!-- CLIENT -->
+          <div class="form-group">
+            <label for="courseClient">
+              👤 Client (Nom ou Téléphone) <span class="required">*</span>
+            </label>
+            <input type="text" id="courseClient" class="form-input" placeholder="Ex: Mme Traoré / Boutique Kaya"
+              required autocomplete="off">
+          </div>
+
+          <!-- QUARTIERS DE DÉPART ET D'ARRIVÉE -->
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="courseDepart">
+                📍 Quartier Départ <span class="required">*</span>
+              </label>
+              <input type="text" id="courseDepart" list="ouagaQuartiers" class="form-input"
+                placeholder="Ex: Patte d'Oie" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+              <label for="courseArrivee">
+                🏁 Quartier Arrivée <span class="required">*</span>
+              </label>
+              <input type="text" id="courseArrivee" list="ouagaQuartiers" class="form-input"
+                placeholder="Ex: Ouaga 2000" required autocomplete="off">
+            </div>
+          </div>
+
+          <!-- LISTE SUGGESTIONS DES QUARTIERS DE OUAGADOUGOU -->
+          <datalist id="ouagaQuartiers">
+            <option value="Ouaga 2000">
+            <option value="Patte d'Oie">
+            <option value="Gounghin">
+            <option value="Koulouba">
+            <option value="Tampouy">
+            <option value="Somgandé">
+            <option value="Dassasgho">
+            <option value="Wayalghin">
+            <option value="Pissy">
+            <option value="Tanghin">
+            <option value="Karpala">
+            <option value="Saaba">
+            <option value="1200 Logements">
+            <option value="Zone 1">
+            <option value="Cité An III">
+            <option value="Wemtenga">
+            <option value="Pag-layiri">
+            <option value="Larlé">
+            <option value="Kalgondin">
+            <option value="Bendogo">
+            <option value="Cissin">
+            <option value="Samandin">
+            <option value="Dag-noën">
+            <option value="Nonsin">
+            <option value="Nioko 1">
+            <option value="Nioko 2">
+            <option value="Zone du Bois">
+            <option value="Hamdalaye">
+            <option value="Baskuy">
+            <option value="Bogodogo">
+            <option value="Sig-Noghin">
+            <option value="Nongr-Maasom">
+            <option value="Boulmiougou">
+          </datalist>
+
+          <!-- MONTANTS FINANCIERS -->
+          <div class="financial-inputs-card">
+            <div class="form-group">
+              <label for="courseMontant" class="label-highlight">
+                💵 Montant reçu (FCFA) <span class="required">*</span>
+              </label>
+              <div class="input-with-unit">
+                <input type="number" id="courseMontant" class="form-input input-money" placeholder="0" min="0" step="50"
+                  required inputmode="numeric">
+                <span class="unit-text">FCFA</span>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="courseCarburant">
+                  ⛽ Carburant (FCFA)
+                </label>
+                <div class="input-with-unit">
+                  <input type="number" id="courseCarburant" class="form-input" placeholder="0" min="0" step="50"
+                    value="0" inputmode="numeric">
+                  <span class="unit-text">FCFA</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="courseAutresFrais">
+                  🔧 Autres frais (FCFA)
+                </label>
+                <div class="input-with-unit">
+                  <input type="number" id="courseAutresFrais" class="form-input" placeholder="0" min="0" step="50"
+                    value="0" inputmode="numeric">
+                  <span class="unit-text">FCFA</span>
+                </div>
+                <small class="field-hint">Ex: crevaison, gonflage, thé...</small>
+              </div>
+            </div>
+
+            <!-- CALCUL AUTOMATIQUE DU BÉNÉFICE NET EN TEMPS RÉEL -->
+            <div class="net-profit-box" id="netProfitBox">
+              <div class="profit-label">BÉNÉFICE NET ESTIMÉ</div>
+              <div class="profit-calc-formula">
+                <span id="formulaMontant">0</span> -
+                <span id="formulaCarburant">0</span> -
+                <span id="formulaFrais">0</span>
+              </div>
+              <div class="profit-value-display">
+                <span id="liveNetProfitValue">0</span>
+                <span class="profit-unit">FCFA</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MODE DE PAIEMENT -->
+          <div class="form-group">
+            <label class="mb-2">💳 Mode de paiement <span class="required">*</span></label>
+            <div class="payment-methods-grid">
+              <label class="payment-chip">
+                <input type="radio" name="paymentMode" value="Espèces" checked>
+                <span class="chip-content pay-especes">
+                  <span class="chip-icon">💵</span>
+                  <span class="chip-name">Espèces</span>
+                </span>
+              </label>
+
+              <label class="payment-chip">
+                <input type="radio" name="paymentMode" value="Orange Money">
+                <span class="chip-content pay-orange">
+                  <span class="chip-icon">🟠</span>
+                  <span class="chip-name">Orange Money</span>
+                </span>
+              </label>
+
+              <label class="payment-chip">
+                <input type="radio" name="paymentMode" value="Moov Money">
+                <span class="chip-content pay-moov">
+                  <span class="chip-icon">🔵</span>
+                  <span class="chip-name">Moov Money</span>
+                </span>
+              </label>
+
+              <label class="payment-chip">
+                <input type="radio" name="paymentMode" value="Autre">
+                <span class="chip-content pay-autre">
+                  <span class="chip-icon">⚪</span>
+                  <span class="chip-name">Autre</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- BOUTONS D'ACTION DU FORMULAIRE -->
+          <div class="form-actions">
+            <button type="submit" id="btnSaveCourse" class="btn btn-primary btn-large">
+              💾 <span id="btnSaveText">Enregistrer la course</span>
+            </button>
+            <button type="button" id="btnCancelEdit" class="btn btn-secondary" hidden>
+              Annuler la modification
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 2. VUE : LISTE DES COURSES -->
+    <section id="viewCourses" class="view-panel">
+      <!-- Barre d'actions & Résumé rapide -->
+      <div class="courses-toolbar">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" class="search-input" placeholder="Rechercher client, quartier..."
+            autocomplete="off">
+          <button id="clearSearchBtn" class="clear-search" hidden>&times;</button>
+        </div>
+
+        <div class="quick-stats-summary" id="quickDaySummary">
+          <div class="summary-pill">
+            <span class="pill-label">Total courses</span>
+            <span class="pill-val" id="summaryTotalCourses">0</span>
+          </div>
+          <div class="summary-pill highlight-pill">
+            <span class="pill-label">Bénéfice Net Global</span>
+            <span class="pill-val" id="summaryTotalNet">0 FCFA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filtres rapides par date -->
+      <div class="filter-chips-row">
+        <button class="filter-chip active" data-filter="all">Toutes les courses</button>
+        <button class="filter-chip" data-filter="today">Aujourd'hui</button>
+        <button class="filter-chip" data-filter="week">Cette semaine</button>
+        <button class="filter-chip" data-filter="month">Ce mois</button>
+      </div>
+
+      <!-- Conteneur des cartes de courses -->
+      <div id="coursesListContainer" class="courses-cards-container">
+        <!-- Rempli dynamiquement en JavaScript -->
+      </div>
+
+      <!-- Message si aucune course -->
+      <div id="emptyState" class="empty-state" hidden>
+        <div class="empty-icon">🛵</div>
+        <h3>Aucune course enregistrée</h3>
+        <p>Touchez le bouton vert ci-dessous pour ajouter votre première course de la journée !</p>
+        <button class="btn btn-primary btn-goto-add" id="btnGoToAddFromEmpty">
+          ➕ Ajouter une course maintenant
+        </button>
+      </div>
+    </section>
+
+    <!-- 3. VUE PROVISOIRE : INTRO DU TABLEAU DE BORD (Prochaine étape) -->
+    <section id="viewStatsPlaceholder" class="view-panel" hidden>
+      <div class="card placeholder-card">
+        <div class="placeholder-badge">Étape 1 terminée avec succès !</div>
+        <h2>📊 Tableau de bord (Prochaine étape)</h2>
+        <p class="placeholder-desc">
+          Votre formulaire et votre liste de courses fonctionnent déjà à 100% avec calcul automatique du bénéfice net en
+          FCFA.
+        </p>
+        <div class="stats-preview-grid">
+          <div class="preview-metric">
+            <span class="preview-icon">📈</span>
+            <h4>Gains, Dépenses & Bénéfices</h4>
+            <p>Aujourd'hui, Cette Semaine, Ce Mois</p>
+          </div>
+          <div class="preview-metric">
+            <span class="preview-icon">🏆</span>
+            <h4>Top 5 Clients & Quartiers</h4>
+            <p>Les clients et quartiers les plus rentables</p>
+          </div>
+          <div class="preview-metric">
+            <span class="preview-icon">💳</span>
+            <h4>Modes de Paiement</h4>
+            <p>Espèces vs Orange Money vs Moov</p>
+          </div>
+          <div class="preview-metric">
+            <span class="preview-icon">📁</span>
+            <h4>Export & Import Excel</h4>
+            <p>Export propre pour Power BI et import .xlsx</p>
+          </div>
+        </div>
+        <p class="ready-note">👉 Dès que vous validez la liste et le formulaire, j'active tous les graphiques et calculs
+          du tableau de bord !</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= BOUTON FLOTTANT AJOUTER (SUR MOBILE) ================= -->
+  <button id="floatingAddBtn" class="floating-fab" title="Ajouter une course">
+    <span class="fab-icon">➕</span>
+    <span class="fab-text">Ajouter</span>
+  </button>
+
+  <!-- ================= BOÎTE DE DIALOGUE CONFIRMATION SUPPRESSION ================= -->
+  <dialog id="deleteConfirmDialog" class="confirm-dialog">
+    <div class="dialog-content">
+      <div class="dialog-icon">⚠️</div>
+      <h3 class="dialog-title">Supprimer cette course ?</h3>
+      <p id="deleteDialogText" class="dialog-text">Voulez-vous vraiment supprimer cette course ? Cette action est
+        irréversible.</p>
+      <div class="dialog-actions">
+        <button id="btnCancelDelete" class="btn btn-secondary">Annuler</button>
+        <button id="btnConfirmDelete" class="btn btn-danger">Oui, supprimer</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ================= TOAST NOTIFICATION (MESSAGE FLASH) ================= -->
+  <div id="toastMessage" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- SCRIPT APPLICATION -->
+  <script src="app.js"></script>
+</body>
+
+</html>
